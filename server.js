@@ -15,7 +15,8 @@ app.get('/', (req, res) => {
 
 app.post('/sendFile', (req, res) => {
     req.on('data', chunk => {
-        console.log('ei ' + chunk);
+        // Scrivere il file nella directory del nuovo progetto
+        // fs.writeFileSync('./')
     });
 
     res.redirect('/')
