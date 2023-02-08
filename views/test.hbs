@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+    <script>
+        const template = Handlebars.compile(document.getElementById("site-template").innerHTML);
+        const jsonData = {
+            title: "My Simple Site",
+            description: "This is a simple site generated from JSON data.",
+            items: [
+                "Item 1",
+                "Item 2",
+                "Item 3",
+            ],
+        };
+        document.getElementById("site-container").innerHTML = template(jsonData);
+    </script>
+</head>
+
+<body>
+    <script id="site-template" type="text/x-handlebars-template">
+      <h1>{{title}}</h1>
+      <p>{{description}}</p>
+      <ul>
+        {{#each items}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </script>
+    <div id="site-container"></div>
+
+
+    test
+
+    {{#if showTitle}}
+    <h1>ciao</h1>
+    {{/if}}
+
+    {{foo}}
+
+</body>
+
+</html>

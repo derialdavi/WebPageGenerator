@@ -9,7 +9,15 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index', {showTitle: true, foo: 'foo'});
+    res.render('index');
+});
+
+app.get('/test', (req, res) => {
+    res.render('test', {showTitle: true, foo: 'foo'});
+});
+
+app.get('/test1', (req, res) => {
+    res.render('test1');
 });
 
 app.get('/sendFile', (req, res) => {
