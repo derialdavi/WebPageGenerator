@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get()
+// app.get()
 
 app.listen(PORT, () => {
     console.log('Server at %s', PORT);
