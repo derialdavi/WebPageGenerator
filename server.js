@@ -1,7 +1,7 @@
 const fs = require('fs');
 const hbs = require('hbs');
 const express = require('express');
-
+const Handlebars = require("handlebars");
 const PORT = 8080;
 
 const app = express();
@@ -13,11 +13,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/test', (req, res) => {
-    res.render('test', {showTitle: true, foo: 'foo'});
+    res.render('test', { showTitle: true, foo: 'foo' });
 });
 
 app.get('/test1', (req, res) => {
-    res.render('test1');
+    res.render('test1',{data:data});
 });
 
 app.get('/sendFile', (req, res) => {
@@ -28,3 +28,25 @@ app.get('/sendFile', (req, res) => {
 app.listen(PORT, () => {
     console.log('Server at %s', PORT);
 });
+
+hbs.registerHelper('isSection', value => {
+    return value.toString().includes("section");
+});
+
+hbs.registerHelper('json', context => {
+    return JSON.stringify(context);
+});
+
+var data = {
+    "Titolo":"aaaa",
+    "Sottotitolo":"bbbbb",
+    "section1":{
+        "titolo":"titolo1",
+        "descrizione":"descrizione1",
+    },
+    "section2":{
+        "titolo":"titolo2",
+        "descrizione":"descrizione2",
+    },
+};
+
