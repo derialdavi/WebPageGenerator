@@ -18,16 +18,12 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container px-4">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
-                    class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    {{#each data}}
-                    {{#if (isSection this)}}
-                    <li class="nav-item"><a class="nav-link" href="#{{this}}">{{this}}</a></li>
+                    {{#each data.sections}}
+                    <li class="nav-item"><a class="nav-link" href="#{{this.titolo}}">{{this.titolo}}</a></li>
 
-                    {{/if}}
+                    
                     {{/each}}
                 </ul>
             </div>
@@ -37,16 +33,15 @@
     <header class="bg-header bg-gradient text-white">
         <div class="container px-4 text-center">
 
-            <h1 class="fw-bolder">{{data.Titolo}}</h1>
-            <p class="lead">{{data.Sottotitolo}}</p>
+            <h1 class="fw-bolder">{{data.header.Titolo}}</h1>
+            <p class="lead">{{data.header.Sottotitolo}}</p>
 
         </div>
     </header>
 
     <div class="dets">
-        {{#each data}}
-        {{this}}
-        {{#if (isSection this)}}
+        
+        {{#each data.sections}}
         <section id="{{this.titolo}}">
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
@@ -61,13 +56,13 @@
                 </div>
             </div>
         </section>
-        {{/if}}
         {{/each}}
+        
     </div>
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container px-4">
-            <p class="m-0 text-center text-white">Copyright &copy; Ficars 2022</p>
+            <p class="m-0 text-center text-white">Copyright &copy; Ficars 2k23</p>
         </div>
     </footer>
     <!-- Bootstrap core JS-->

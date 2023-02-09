@@ -38,15 +38,34 @@ hbs.registerHelper('json', context => {
 });
 
 var data = {
-    "Titolo":"aaaa",
-    "Sottotitolo":"bbbbb",
-    "section1":{
+    "header":{
+        "Titolo":"aaaa",
+        "Sottotitolo":"bbbbb",
+    },
+    "sections":[{
         "titolo":"titolo1",
         "descrizione":"descrizione1",
     },
-    "section2":{
+    {
         "titolo":"titolo2",
         "descrizione":"descrizione2",
     },
+    {
+        "titolo":"titolo3",
+        "descrizione":"descrizione3",
+    },
+    {
+        "titolo":"titolo4",
+        "descrizione":"descrizione4",
+    },
+    {
+        "titolo":"titolo5",
+        "descrizione":"descrizione5",
+    },
+    {
+        "titolo":"titolo6",
+        "descrizione":"descrizione6",
+    }]
 };
+
 
