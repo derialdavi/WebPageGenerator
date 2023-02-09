@@ -9,7 +9,7 @@
     <title>test</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
     
 </head>
 
@@ -20,11 +20,8 @@
         <div class="container px-4">
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    {{#each data}}
-                    {{#if (isSection this)}}
-                    <li class="nav-item"><a class="nav-link" href="#{{this}}">{{this}}</a></li>
-
-                    {{/if}}
+                    {{#each sections}}
+                    <li class="nav-item"><a class="nav-link" href="#{{this.titolo}}">{{this.titolo}}</a></li>
                     {{/each}}
                 </ul>
             </div>
@@ -34,15 +31,13 @@
     <header class="bg-header bg-gradient text-white">
         <div class="container px-4 text-center">
 
-            <h1 class="fw-bolder">{{data.Titolo}}</h1>
-            <p class="lead">{{data.Sottotitolo}}</p>
+            <h1 class="fw-bolder">{{header.titolo}}</h1>
+            <p>{{header.sottotitolo}}</p>
         </div>
     </header>
 
     <div class="dets">
-        {{#each data}}
-        {{this}}
-        {{#if (isSection this)}}
+        {{#each sections}}
         <section id="{{this.titolo}}">
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
@@ -57,7 +52,6 @@
                 </div>
             </div>
         </section>
-        {{/if}}
         {{/each}}
     </div>
     <!-- Footer-->

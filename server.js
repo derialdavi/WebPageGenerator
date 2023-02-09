@@ -40,11 +40,10 @@ app.post('/sendFile', (req, res) => {
             // Generazione della cartella e dei file del progetto
             fs.mkdirSync(projectFolder);
             fs.writeFileSync('./siti/' + chunk.titolo + '/' + chunk.titolo + '.json', JSON.stringify(chunk));
-            fs.writeFileSync('./siti/' + chunk.titolo + '/' + chunk.titolo + '.hbs', fs.readFileSync('./template/template.hbs'));
 
             res.redirect('/');
         }
-        
+
         else {
             res.redirect('/?alreadyExists=true');
         }
@@ -52,9 +51,11 @@ app.post('/sendFile', (req, res) => {
 
 });
 
-app.get('/test', (req, res) => {
-    var fileJSON = JSON.parse(fs.readFileSync('./siti/aaab/aaab.json'));
-    res.render('template', { data : fileJSON });
+app.get('/:projectName', (req, res) => {
+    var projectName = req.params.projectName;
+    console.log(projectName);
+    var fileJSON = JSON.parse(fs.readFileSync('./siti/' + projectName + '/' + projectName + '.json'));
+    res.render('template', fileJSON );
 })
 
 app.listen(PORT, () => {

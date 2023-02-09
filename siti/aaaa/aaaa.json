@@ -1,1 +1,16 @@
-{"titolo":"aaaa","navbar":{},"header":{"titolo":2,"sottotitolo":1},"section1":{"titolo":1,"descrizione":2,"lista":{"1":"C","2":"Java","3":"Python"}},"section2":{},"footer":{}}
+{
+    "header": {
+        "titolo": "aaaa",
+        "sottotitolo": "bbbb"
+    },
+    "sections": [
+        {
+            "titolo": "Sezione 1",
+            "descrizione": "Descrizione sezione 1"
+        },
+        {
+            "titolo": "Sezione 2",
+            "descrizione": "Descrizione sezione 2"
+        }
+    ]
+}
