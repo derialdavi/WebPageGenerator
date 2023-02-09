@@ -39,6 +39,9 @@ app.post('/sendFile', (req, res) => {
         chunk = chunk.replace(chunk.substring(0, chunk.indexOf('&') + 1), '');
         chunk = JSON.parse(chunk.replace(chunk.substring(0, chunk.indexOf('=') + 1), ''));
 
+        if (!fs.existsSync(__dirname + '/siti'))
+            fs.mkdirSync(__dirname + '/siti');
+
         // Scrivere il file nella directory del nuovo progetto se non esiste un progetto con lo stesso nome
         var projectFolder = __dirname + '/siti/' + chunk.header.titolo;
         if (!fs.existsSync(projectFolder)) {
