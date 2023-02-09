@@ -1,29 +1,16 @@
 {
-    "titolo": "aaab",
-    "navbar": {},
     "header": {
-        "titolo": 2,
-        "sottotitolo": 1
+        "titolo": "primo progetto",
+        "sottotitolo": "bbbd"
     },
     "sections": [
         {
-            "titolo": 1,
-            "descrizione": 2,
-            "lista": {
-                "1": "C",
-                "2": "Java",
-                "3": "Python"
-            }
+            "titolo": "Sezione 1",
+            "descrizione": "Descrizione sezione 1"
         },
         {
-            "titolo": 1,
-            "descrizione": 2,
-            "lista": {
-                "1": "C",
-                "2": "Java",
-                "3": "Python"
-            }
+            "titolo": "Sezione 2",
+            "descrizione": "Descrizione sezione 2"
         }
-    ],
-    "footer": {}
+    ]
 }

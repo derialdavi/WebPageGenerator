@@ -6,7 +6,6 @@ input.addEventListener('change', () => {
         content = reader.result;
         // console.log(content);
         document.getElementById('file-content').value = content;
-        console.log(document.getElementById('file-content').value);
     };
     reader.readAsText(input.files[0]);
 });

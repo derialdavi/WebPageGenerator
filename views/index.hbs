@@ -14,7 +14,12 @@
     <h1>Esiste gia un progetto con questo nome</h1>
     {{/if}}
 
-
+    {{#if sendToPage}}
+    <a href="/{{projectName}}">
+        <button>vai alla pagina appena creata</button>
+        <script>console.log("Cioa")</script>
+    </a>
+    {{/if}}
 
     <form action="/sendFile" method="post">
         <input type="file" name="file" id="file-selector" accept=".json">
