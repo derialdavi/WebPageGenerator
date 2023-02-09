@@ -10,7 +10,14 @@
         },
         {
             "titolo": "Sezione 2",
-            "descrizione": "Descrizione sezione 2"
+            "descrizione": "Descrizione sezione 2",
+            "nomeLista": "ciaone",
+            "elementi": [
+                "rosa",
+                "blu",
+                "giallo",
+                "rosso"
+            ]
         }
     ]
 }

@@ -12265,3 +12265,7 @@ section {
 .dets>section:nth-child(odd) {
     background-color: #fff;
 }
+
+li{
+    list-style-type: circle;
+}
