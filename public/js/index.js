@@ -4,16 +4,23 @@ input.addEventListener('change', () => {
     const reader = new FileReader();
     reader.onload = function () {
         content = reader.result;
+        // console.log(content);
+        document.getElementById('file-content').value = content;
+        console.log(document.getElementById('file-content').value);
     };
     reader.readAsText(input.files[0]);
 });
 
-function sendFile() {
-    fetch('/sendFile', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: content
-    });
-}
+// function sendFile() {
+//     console.log('mandato')
+//     fetch('/sendFile', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: content
+//     })
+//     .finally(() => {
+//         window.location.replace('/?alreadyExists=true');
+//     })
+// }

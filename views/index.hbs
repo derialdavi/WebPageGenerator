@@ -10,15 +10,17 @@
 
 <body>
 
-    {{#if showTitle}}
-    <h1>CIoa</h1>
+    {{#if alreadyExists}}
+    <h1>Esiste gia un progetto con questo nome</h1>
     {{/if}}
 
-    {{foo}}
 
 
-    <input type="file" name="" id="file-selector" accept=".json">
-    <input type="submit" value="c" onclick="sendFile()">
+    <form action="/sendFile" method="post">
+        <input type="file" name="file" id="file-selector" accept=".json">
+        <input type="text" name="file-content" id="file-content" readonly hidden>
+        <input type="submit" value="c">
+    </form>
 
 
     <script src="js/index.js"></script>
