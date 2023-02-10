@@ -13,6 +13,10 @@ hbs.registerHelper('isSection', value => {
     return value.toString().includes('section');
 })
 
+app.get('/bo',(req,res)=>{
+    res.render('bo');
+})
+
 app.get('/', (req, res) => {
     
     let flag, projectName;
