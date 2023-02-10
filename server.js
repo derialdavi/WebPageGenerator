@@ -13,10 +13,6 @@ hbs.registerHelper('isSection', value => {
     return value.toString().includes('section');
 })
 
-app.get('/bo',(req,res)=>{
-    res.render('bo');
-})
-
 app.get('/', (req, res) => {
     
     let flag, projectName;
@@ -39,7 +35,7 @@ app.get('/', (req, res) => {
             listTemplate.push(i + 1);
         }
     });
-
+ console.log(listTemplate.length)
     res.render('index', { alreadyExists: flag, projectName: projectName, sendToPage: req.query.sendToPage, listTemplate: listTemplate });
 });
 
@@ -87,3 +83,7 @@ app.get('/:projectName', (req, res) => {
 app.listen(PORT, () => {
     console.log('Server at %s', PORT);
 });
+
+hbs.registerHelper('isEven', value=>{
+    return value %2 === 0;
+})
