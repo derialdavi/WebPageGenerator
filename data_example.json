@@ -1,6 +1,6 @@
 {
     "header": {
-        "titolo": "fsdjigfo",
+        "titolo": "gerg",
         "sottotitolo": "bbbd"
     },
     "sections": [
@@ -11,12 +11,18 @@
         {
             "titolo": "Sezione 2",
             "descrizione": "Descrizione sezione 2",
-            "nomeLista": "ciaone",
-            "elementi": [
-                "rosa",
-                "blu",
-                "giallo",
-                "rosso"
+            "lista": [
+                {
+                    "lista1": [
+                        "C",
+                        "C#",
+                        "C++"
+                    ],
+                    "lista2": [
+                        "JavaScript",
+                        "Python"
+                    ]
+                }
             ]
         }
     ]
