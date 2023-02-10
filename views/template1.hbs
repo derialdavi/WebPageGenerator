@@ -47,21 +47,27 @@
 
                         <p class="lead">
                             {{this.descrizione}}
-
-                            <br><br>
-                            {{this.nomeLista}}
-                        <ul>
-                            {{#each this.elementi}}
-                            <li class="lead">{{this}}</li>
-                            {{/each}}
-                        </ul>
                         </p>
+                        
+                        {{#if liste}}
+                            {{#each liste}}
+                                {{#each this}}
+                                    <h3>{{@key}}</h3>
+                                    <ul>
+                                        {{#each this}}
+                                        <li>{{this}}</li>
+                                        {{/each}}
+                                    </ul>
+                                {{/each}}
+                            {{/each}}
+                        {{/if}}
                     </div>
                 </div>
             </div>
         </section>
         {{/each}}
     </div>
+
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container px-4">

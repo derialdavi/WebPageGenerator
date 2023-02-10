@@ -9,8 +9,8 @@ const app = express();
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
-hbs.registerHelper('isSection', value => {
-    return value.toString().includes('section');
+hbs.registerHelper('isEven', value => {
+    return value % 2 === 0;
 })
 
 app.get('/', (req, res) => {
