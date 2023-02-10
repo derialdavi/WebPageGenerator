@@ -24,7 +24,7 @@
     </a>
     {{/if}}
 
-    <form action="/sendFile" method="post">
+    <form action="/createPage" method="post">
         <input type="file" name="file" id="file-selector" accept=".json">
         <input type="text" name="file-content" id="file-content" readonly hidden>
         <input type="submit" value="c">
@@ -38,7 +38,7 @@
                 <div class="card-col col-md-4 col-lg-4 col-sm-4">
 
                     <label>
-                        <input type="radio" name="product" value="{{this}}" selected checked class="card-input-element" />
+                        <input type="radio" name="product" value="{{this}}" class="card-input-element" />
 
                         <div class="card card-default card-input">
                             <div class="card-header">Template {{this}}</div>
