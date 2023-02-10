@@ -17,17 +17,13 @@
     <h1>Esiste gia un progetto con questo nome</h1>
     {{/if}}
 
-    {{#if sendToPage}}
-    <a href="/{{projectName}}">
-        <button>vai alla pagina appena creata</button>
-        <script>console.log("Cioa")</script>
-    </a>
-    {{/if}}
+    
 
     <form action="/createPage" method="post">
-        <input type="file" name="file" id="file-selector" accept=".json">
+        <div class="input_container" style="max-width: 30%;">
+            <input type="file" name="file" id="file-selector" accept=".json">
+        </div>
         <input type="text" name="file-content" id="file-content" readonly hidden>
-        <input type="submit" value="c">
 
         <br><br>
 
@@ -53,7 +49,17 @@
             </div>
             {{/each}}
         </div>
+        
+        
+        <input type="submit" value="Crea">
     </form>
+
+    {{#if sendToPage}}
+    <a href="/{{projectName}}">
+        <button>vai alla pagina appena creata</button>
+        <script>console.log("Cioa")</script>
+    </a>
+    {{/if}}
 
     <script src="js/index.js"></script>
 
