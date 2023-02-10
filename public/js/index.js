@@ -1,6 +1,6 @@
-const input = document.querySelector('input[type="submit"]');
+const input = document.querySelector('input[type="file"]');
 let content;
-input.addEventListener('click', () => {
+input.addEventListener('change', () => {
     const reader = new FileReader();
     reader.onload = function () {
         content = reader.result;

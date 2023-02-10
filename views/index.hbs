@@ -28,32 +28,32 @@
         <input type="file" name="file" id="file-selector" accept=".json">
         <input type="text" name="file-content" id="file-content" readonly hidden>
         <input type="submit" value="c">
-    </form>
 
-    <br><br>
+        <br><br>
 
-    <div class="container">
-        {{#each listTemplate}}
-        <div class="row">
+        <div class="container">
+            {{#each listTemplate}}
+            <div class="row">
 
-            <div class="card-col col-md-4 col-lg-4 col-sm-4">
+                <div class="card-col col-md-4 col-lg-4 col-sm-4">
 
-                <label>
-                    <input type="radio" name="product" selected checked class="card-input-element" />
+                    <label>
+                        <input type="radio" name="product" value="{{this}}" selected checked class="card-input-element" />
 
-                    <div class="card card-default card-input">
-                        <div class="card-header">Template {{this}}</div>
-                        <hr>
-                        <div class="card-body">
-                            <img src="img/{{this}}.png" alt="">
+                        <div class="card card-default card-input">
+                            <div class="card-header">Template {{this}}</div>
+                            <hr>
+                            <div class="card-body">
+                                <img src="img/template{{this}}.png" alt="">
+                            </div>
                         </div>
-                    </div>
 
-                </label>
+                    </label>
+                </div>
             </div>
+            {{/each}}
         </div>
-        {{/each}}
-    </div>
+    </form>
 
     <script src="js/index.js"></script>
 

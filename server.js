@@ -14,10 +14,10 @@ hbs.registerHelper('isSection', value => {
 })
 
 app.get('/', (req, res) => {
-
+    
     let flag, projectName;
     let listTemplate = new Array();
-    console.log()
+    
     if (req.query.alreadyExists === undefined)
         flag = false;
 
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
     fs.readdir('./public/img', (err, files) => {
         for (var i = 0; i < files.length; i++) {
-            listTemplate.push(i+1);
+            listTemplate.push(i + 1);
         }
     });
 
@@ -42,23 +42,26 @@ app.get('/', (req, res) => {
 app.post('/sendFile', (req, res) => {
     req.on('data', chunk => {
 
-        // Formattazione della stringa di dati contenente il json
+        // Formattazione della stringa di dati contenente i parametri della query
         chunk = chunk.toString().replace(/\+/g, ' ').replace(/%7B/g, '{').replace(/%7D/g, '}').replace(/%22/g, '"').replace(/%3A/g, ':').replace(/%2C/g, ',').replace(/\%5B/g, '[').replace(/\%5D/g, ']');
-        chunk = chunk.replace(chunk.substring(0, chunk.indexOf('&') + 1), '');
-        chunk = JSON.parse(chunk.replace(chunk.substring(0, chunk.indexOf('=') + 1), ''));
+        var params = new URLSearchParams(chunk);
+        console.log(params);
+        let content = JSON.parse(params.get('file-content'));
+        let templateNumber = params.get('product');
 
         if (!fs.existsSync(__dirname + '/siti'))
             fs.mkdirSync(__dirname + '/siti');
 
         // Scrivere il file nella directory del nuovo progetto se non esiste un progetto con lo stesso nome
-        var projectFolder = __dirname + '/siti/' + chunk.header.titolo;
+        var projectFolder = __dirname + '/siti/' + content.header.titolo;
         if (!fs.existsSync(projectFolder)) {
 
             // Generazione della cartella e dei file del progetto
             fs.mkdirSync(projectFolder);
-            fs.writeFileSync('./siti/' + chunk.header.titolo + '/' + chunk.header.titolo + '.json', JSON.stringify(chunk));
+            fs.writeFileSync('./siti/' + content.header.titolo + '/' + content.header.titolo + '.json', JSON.stringify(content));
+            fs.writeFileSync('./siti/' + content.header.titolo + '/template.json', JSON.stringify({ template: templateNumber }));
 
-            res.redirect('/?sendToPage=true&projectName=' + chunk.header.titolo);
+            res.redirect('/?sendToPage=true&projectName=' + content.header.titolo + '&template=' + templateNumber);
         }
 
         else {
@@ -70,9 +73,11 @@ app.post('/sendFile', (req, res) => {
 
 app.get('/:projectName', (req, res) => {
     var projectName = req.params.projectName;
-    
+    var templateFile = JSON.parse(fs.readFileSync('./siti/' + projectName + '/template.json'));
+    var templateNumber = templateFile.template;
+
     var fileJSON = JSON.parse(fs.readFileSync('./siti/' + projectName + '/' + projectName + '.json'));
-    res.render('template', fileJSON );
+    res.render('template' + templateNumber, fileJSON);
 })
 
 app.listen(PORT, () => {
