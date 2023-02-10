@@ -15,7 +15,9 @@ hbs.registerHelper('isSection', value => {
 
 app.get('/', (req, res) => {
 
-    var flag, projectName;
+    let flag, projectName;
+    let listTemplate = new Array();
+    console.log()
     if (req.query.alreadyExists === undefined)
         flag = false;
 
@@ -28,7 +30,13 @@ app.get('/', (req, res) => {
     else
         projectName = null;
 
-    res.render('index', { alreadyExists: flag, projectName: projectName, sendToPage: req.query.sendToPage });
+    fs.readdir('./public/img', (err, files) => {
+        for (var i = 0; i < files.length; i++) {
+            listTemplate.push(i+1);
+        }
+    });
+
+    res.render('index', { alreadyExists: flag, projectName: projectName, sendToPage: req.query.sendToPage, listTemplate: listTemplate });
 });
 
 app.post('/sendFile', (req, res) => {
@@ -62,7 +70,7 @@ app.post('/sendFile', (req, res) => {
 
 app.get('/:projectName', (req, res) => {
     var projectName = req.params.projectName;
-    console.log(projectName);
+    
     var fileJSON = JSON.parse(fs.readFileSync('./siti/' + projectName + '/' + projectName + '.json'));
     res.render('template', fileJSON );
 })

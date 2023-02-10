@@ -1,1 +1,16 @@
-{"header":{"titolo":"primo progetto","sottotitolo":"bbbd"},"sections":[{"titolo":"Sezione 1","descrizione":"Descrizione sezione 1"},{"titolo":"Sezione 2","descrizione":"Descrizione sezione 2","nomeLista":"ciaone","elementi":["rosa","blu","giallo","rosso"]}]}
+{
+    "header": {
+        "titolo": "primo progetto",
+        "sottotitolo": "bbbd"
+    },
+    "sections": [
+        {
+            "titolo": "Sezione 1",
+            "descrizione": "Descrizione sezione 1"
+        },
+        {
+            "titolo": "Sezione 2",
+            "descrizione": "Descrizione sezione 2"
+        }
+    ]
+}
