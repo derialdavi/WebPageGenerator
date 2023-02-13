@@ -30,9 +30,9 @@ app.get('/', (req, res) => {
     else
         projectName = null;
 
-    fs.readdir('./public/img', (err, files) => {
-        for (var i = 0; i < files.length; i++) {
-            listTemplate.push(i + 1);
+    fs.readdir('./views', (err, files) => {
+        for (var i = 1; i < files.length; i++) {
+            listTemplate.push(i);
         }
     });
 
@@ -58,8 +58,9 @@ app.post('/createPage', (req, res) => {
 
             // Generazione della cartella e dei file del progetto
             fs.mkdirSync(projectFolder);
-            fs.writeFileSync('./siti/' + content.header.titolo + '/' + content.header.titolo + '.json', JSON.stringify(content));
-            fs.writeFileSync('./siti/' + content.header.titolo + '/template.json', JSON.stringify({ template: templateNumber }));
+            fs.writeFileSync(projectFolder + '/' + content.header.titolo + '.json', JSON.stringify(content));
+            fs.writeFileSync(projectFolder + '/template.json', JSON.stringify({ template: templateNumber }));
+            fs.mkdirSync(projectFolder + '/img');
 
             res.redirect('/?sendToPage=true&projectName=' + content.header.titolo + '&template=' + templateNumber);
         }

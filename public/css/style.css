@@ -3,7 +3,8 @@
 **/
 
 body {
-    background: #F0E5E1;
+    background-attachment: fixed;
+    background-image: linear-gradient(#fff, #6dd5fa, #2980b9, #000);
 }
 
 .container {
@@ -59,21 +60,23 @@ label {
 .card-input-element:checked+.card-input {
     box-shadow: 0 0 1px 1px #2ecc71;
 }
+
 .input_container {
     /* border: 1px solid #e5e5e5; */
     margin: 1%;
-  }
+}
 
 input[type=file]::file-selector-button {
     color: #000;
     background-color: #ffffff;
     border: 0px dashed #00000098;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    ;
 }
 
 input[type=file]::file-selector-button:hover {
-  background-color: #ffffff;
-  border: 1px solid #1a5b5e;
+    background-color: #ffffff;
+    border: 1px solid #1a5b5e;
 }
 
 .btn {
@@ -95,4 +98,69 @@ input[type=file]::file-selector-button:hover {
     font-size: 1rem;
     border-radius: 0.25rem;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#preview-btn {
+    background-image: linear-gradient(#0dccea, #0d70ea);
+    border: 0;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: Montserrat, sans-serif;
+    font-size: .9em;
+    margin: 5px;
+    padding: 10px 15px;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#preview {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 90%;
+    height: 90%;
+    background-color: #fff;
+    border-radius: 15px;
+
+    transition: visibility .3s, opacity .3s linear;
+    visibility: hidden;
+    opacity: 0;
+}
+
+#preview-header {
+    margin: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#exit:hover {
+    cursor: pointer;
+}
+
+#preview-img-div {
+    position: relative;
+    margin: auto;
+    overflow: scroll;
+    max-width: 95%;
+}
+
+#preview img {
+    position: relative;
+    height: 50%;
+    /* height: 50%; */
+    /* height: inherit; */
+}
+
+.scrolling-container {
+    width: 95%;
+    height: 90%;
+    overflow-y: scroll;
 }
