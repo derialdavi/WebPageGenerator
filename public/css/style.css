@@ -155,12 +155,10 @@ input[type=file]::file-selector-button:hover {
 #preview img {
     position: relative;
     height: 50%;
-    /* height: 50%; */
-    /* height: inherit; */
 }
 
 .scrolling-container {
     width: 95%;
-    height: 90%;
+    height: 80%;
     overflow-y: scroll;
 }
