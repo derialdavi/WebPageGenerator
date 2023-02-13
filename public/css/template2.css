@@ -186,6 +186,7 @@ ul,
 dl {
   margin-top: 0;
   margin-bottom: 1rem;
+  color: gainsboro;
 }
 
 ol ol,
@@ -197,6 +198,7 @@ ul ol {
 
 dt {
   font-weight: 700;
+  color: gainsboro;
 }
 
 dd {

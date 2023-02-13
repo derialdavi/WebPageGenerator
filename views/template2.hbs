@@ -49,7 +49,7 @@
         {{#if (isEven @index)}}
 
         <div class="row gx-0 mb-5 mb-lg-0 justify-content-center" id="{{this.titolo}}">
-            <div class="col-lg-6"><img class="img-fluid" src="../siti/{{header.titolo}}/img/{{this.titolo}}"
+            <div class="col-lg-6"><img class="img-fluid" src="../img/template2.png"
                     alt="{{this.titolo}}" /></div>
             <div class="col-lg-6">
                 <div class="bg-black text-center h-100 project">
@@ -57,7 +57,18 @@
                         <div class="project-text w-100 my-auto text-center text-lg-left">
                             <h4 class="text-white">{{this.titolo}}</h4>
                             <p class="mb-0 text-white-50">{{this.descrizione}}</p>
-
+                            {{#if liste}}
+                            {{#each liste}}
+                            {{#each this}}
+                            <h3>{{@key}}</h3>
+                            <ul>
+                                {{#each this}}
+                                <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                            {{/each}}
+                            {{/each}}
+                            {{/if}}
                             <hr class="d-none d-lg-block mb-0 ms-0" />
                         </div>
                     </div>
@@ -72,12 +83,24 @@
                         <div class="project-text w-100 my-auto text-center text-lg-right">
                             <h4 class="text-white">{{this.titolo}}</h4>
                             <p class="mb-0 text-white-50">{{this.descrizione}}</p>
+                            {{#if liste}}
+                            {{#each liste}}
+                            {{#each this}}
+                            <dl>
+                            <dt>{{@key}}</dt>
+                                {{#each this}}
+                                <dd>{{this}}</dd>
+                                {{/each}}
+                            </dl>
+                            {{/each}}
+                            {{/each}}
+                            {{/if}}
                             <hr class="d-none d-lg-block mb-0 me-0" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6"><img class="img-fluid" src="../siti/{{header.titolo}}/img/{{this.titolo}}"
+            <div class="col-lg-6"><img class="img-fluid" src="../img/template2.png"
                     alt="{{this.titolo}}" /></div>
         </div>
         {{/if}}
