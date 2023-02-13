@@ -48,21 +48,29 @@ app.post('/createPage', (req, res) => {
         
         let content = JSON.parse(params.get('file-content'));
         let templateNumber = params.get('product');
+        let projectName = params.get('file');
 
-        if (!fs.existsSync(__dirname + '/siti'))
-            fs.mkdirSync(__dirname + '/siti');
+        if (!fs.existsSync(__dirname + '/public/siti'))
+            fs.mkdirSync(__dirname + '/public/siti');
 
         // Scrivere il file nella directory del nuovo progetto se non esiste un progetto con lo stesso nome
-        var projectFolder = __dirname + '/siti/' + content.header.titolo;
+        var projectFolder = __dirname + '/public/siti/' + projectName;
         if (!fs.existsSync(projectFolder)) {
 
             // Generazione della cartella e dei file del progetto
             fs.mkdirSync(projectFolder);
-            fs.writeFileSync(projectFolder + '/' + content.header.titolo + '.json', JSON.stringify(content));
-            fs.writeFileSync(projectFolder + '/template.json', JSON.stringify({ template: templateNumber }));
+            fs.mkdirSync(projectFolder + '/css');
             fs.mkdirSync(projectFolder + '/img');
+            // fs.mkdirSync(projectFolder + '/js');
 
-            res.redirect('/?sendToPage=true&projectName=' + content.header.titolo + '&template=' + templateNumber);
+            let template = handlebars.compile(fs.readFileSync('/views/template' + templateNumber + '.hbs'));
+            
+
+            fs.writeFileSync(projectFolder + '/index.html', template(JSON.stringify(content)));
+            fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
+            // fs.writeFileSync(projectFolder + '/template.json', JSON.stringify({ template: templateNumber }));
+
+            res.redirect('/?sendToPage=true&projectName=' + projectName);
         }
 
         else {
@@ -72,14 +80,14 @@ app.post('/createPage', (req, res) => {
 
 });
 
-app.get('/:projectName', (req, res) => {
-    var projectName = req.params.projectName;
-    var templateFile = JSON.parse(fs.readFileSync('./siti/' + projectName + '/template.json'));
-    var templateNumber = templateFile.template;
+// app.get('/siti/:projectName', (req, res) => {
+//     var projectName = req.params.projectName;
+//     var templateFile = JSON.parse(fs.readFileSync('./siti/' + projectName + '/template.json'));
+//     var templateNumber = templateFile.template;
 
-    var fileJSON = JSON.parse(fs.readFileSync('./siti/' + projectName + '/' + projectName + '.json'));
-    res.render('template' + templateNumber, fileJSON);
-})
+//     var fileJSON = JSON.parse(fs.readFileSync('./siti/' + projectName + '/' + projectName + '.json'));
+//     res.render('template' + templateNumber, fileJSON);
+// })
 
 app.listen(PORT, () => {
     console.log('Server at %s', PORT);

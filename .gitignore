@@ -1,3 +1,5 @@
-siti/
+public/siti/*
 
-/data
+data/
+
+doc/
