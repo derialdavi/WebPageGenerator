@@ -1,5 +1,6 @@
 const fs = require('fs');
-const hbs = require('hbs');
+const path = require('path');
+const async = require('async');
 const express = require('express');
 const handlebars = require('handlebars');
 
@@ -9,15 +10,15 @@ const app = express();
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
-hbs.registerHelper('isEven', value => {
+handlebars.registerHelper('isEven', value => {
     return value % 2 === 0;
 })
 
 app.get('/', (req, res) => {
-    
+
     let flag, projectName;
     let listTemplate = new Array();
-    
+
     if (req.query.alreadyExists === undefined)
         flag = false;
 
@@ -36,6 +37,46 @@ app.get('/', (req, res) => {
         }
     });
 
+    // Lettura delle cartelle dentro 'public/siti' per poi fare i bottoni per ogni sito
+    const directoryPath = 'public/siti';
+
+    fs.readdir(directoryPath, function (err, files) {
+        if (err) {
+            return console.log('Unable to scan directory: ' + err);
+        }
+
+        let folderCount = 0;
+        async.each(files, function (file, callback) {
+            const filePath = path.join(directoryPath, file);
+            fs.stat(filePath, function (error, stat) {
+                if (error) {
+                    console.log(error);
+                    callback(error);
+                    return;
+                }
+
+                if (stat.isDirectory()) {
+                    folderCount++;
+                }
+                callback();
+            });
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            console.log(`Number of folders: ${folderCount}`);
+        });
+    });
+
+    // fs.readdir('/public/siti', (err, files) => {
+    //     console.log(err);
+    //     for (var i = 0; i < files.length; i++) {
+    //         console.log(i);
+    //     }
+    // });
+
     res.render('index', { alreadyExists: flag, projectName: projectName, sendToPage: req.query.sendToPage, listTemplate: listTemplate });
 });
 
@@ -45,7 +86,7 @@ app.post('/createPage', (req, res) => {
         // Formattazione della stringa di dati contenente i parametri della query
         chunk = chunk.toString().replace(/\+/g, ' ').replace(/%7B/g, '{').replace(/%7D/g, '}').replace(/%22/g, '"').replace(/%3A/g, ':').replace(/%2C/g, ',').replace(/\%5B/g, '[').replace(/\%5D/g, ']');
         var params = new URLSearchParams(chunk);
-        
+
         let content = JSON.parse(params.get('file-content'));
         let templateNumber = params.get('product');
         let projectName = params.get('file').substring(0, params.get('file').indexOf('.'));
