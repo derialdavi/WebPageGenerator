@@ -48,7 +48,7 @@ app.post('/createPage', (req, res) => {
         
         let content = JSON.parse(params.get('file-content'));
         let templateNumber = params.get('product');
-        let projectName = params.get('file');
+        let projectName = params.get('file').substring(0, params.get('file').indexOf('.'));
 
         if (!fs.existsSync(__dirname + '/public/siti'))
             fs.mkdirSync(__dirname + '/public/siti');
@@ -61,14 +61,11 @@ app.post('/createPage', (req, res) => {
             fs.mkdirSync(projectFolder);
             fs.mkdirSync(projectFolder + '/css');
             fs.mkdirSync(projectFolder + '/img');
-            // fs.mkdirSync(projectFolder + '/js');
 
-            let template = handlebars.compile(fs.readFileSync('/views/template' + templateNumber + '.hbs'));
-            
+            let template = handlebars.compile(fs.readFileSync('views/template' + templateNumber + '.hbs').toString());
 
-            fs.writeFileSync(projectFolder + '/index.html', template(JSON.stringify(content)));
+            fs.writeFileSync(projectFolder + '/index.html', template(content));
             fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
-            // fs.writeFileSync(projectFolder + '/template.json', JSON.stringify({ template: templateNumber }));
 
             res.redirect('/?sendToPage=true&projectName=' + projectName);
         }
@@ -79,15 +76,6 @@ app.post('/createPage', (req, res) => {
     });
 
 });
-
-// app.get('/siti/:projectName', (req, res) => {
-//     var projectName = req.params.projectName;
-//     var templateFile = JSON.parse(fs.readFileSync('./siti/' + projectName + '/template.json'));
-//     var templateNumber = templateFile.template;
-
-//     var fileJSON = JSON.parse(fs.readFileSync('./siti/' + projectName + '/' + projectName + '.json'));
-//     res.render('template' + templateNumber, fileJSON);
-// })
 
 app.listen(PORT, () => {
     console.log('Server at %s', PORT);
