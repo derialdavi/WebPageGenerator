@@ -3,6 +3,7 @@ const hbs = require('hbs');
 const path = require('path');
 const async = require('async');
 const express = require('express');
+const archiver = require('archiver');
 const handlebars = require('handlebars');
 const fileUpload = require('express-fileupload');
 
@@ -125,7 +126,7 @@ app.post('/createPage', (req, res) => {
         let template = handlebars.compile(fs.readFileSync('views/template' + templateNumber + '.hbs').toString());
         // Ottenere i dati del file JSON
         let content = JSON.parse(JSONfile.data.toString())
-        
+
         // Creare il file index.html con il contenuto del template compilato con i dati del JSON e copiare il css del template nella cartella del css del progetto
         fs.writeFileSync(projectFolder + '/index.html', template(content));
         fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
@@ -142,6 +143,28 @@ app.post('/createPage', (req, res) => {
         // Esiste gia un progetto con questo nome
         res.redirect('/?alreadyExists=true');
     }
+});
+
+// Url per scaricare i siti
+app.get('/download/:projectName', (req, res) => {
+    const folderPath = path.join(__dirname, 'public', 'siti');
+    const folderName = req.params.projectName;
+
+    // Creare un'archivio .zip della cartella
+    const archive = archiver('zip', {
+        zlib: { level: 9 } // livello di compressione
+    });
+
+    // Aggiungi i file della cartella all'archivio
+    archive.directory(folderPath, folderName);
+
+    // Imposta il nome del file zip e il tipo di contenuto della risposta
+    res.attachment(`${folderName}.zip`);
+    res.type('zip');
+
+    // Invia l'archivio zip al client
+    archive.pipe(res);
+    archive.finalize();
 });
 
 app.listen(PORT, () => {
