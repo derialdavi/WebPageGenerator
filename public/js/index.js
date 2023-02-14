@@ -7,7 +7,7 @@ input.addEventListener('change', () => {
         let sections = JSON.parse(reader.result).sections;
         for (var i = 0; i < sections.length; i++) {
             let text = $('#img-selector').html();
-            $('#img-selector').html(text + '<input class="img-selector" type="file" name="img-selector' + i+1 + '" id="img-selector' + i+1 + '" accept="image/*">')
+            $('#img-selector').html(text + '<label for="img-selector'+ parseInt(i+1) +'" class="button-85"> carica immagine n.'+ parseInt(i+1) +' </label><input type="file" name="img-selector' + parseInt(i+1) + '" id="img-selector' + parseInt(i+1) + '" accept="image/*">')
         }
     };
     reader.readAsText(input.files[0]);
