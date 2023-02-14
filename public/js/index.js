@@ -2,22 +2,42 @@ const input = document.querySelector('input[type="file"]');
 input.addEventListener('change', () => {
     const reader = new FileReader();
     reader.onload = function () {
-        document.getElementById('file-content').value = reader.result;
+        $('#file-content').val(reader.result);
+
+        let sections = JSON.parse(reader.result).sections;
+        for (var i = 0; i < sections.length; i++) {
+            let text = $('#img-selector').html();
+            $('#img-selector').html(text + '<input class="img-selector" type="file" name="img-selector' + i+1 + '" id="img-selector' + i+1 + '" accept="image/*">')
+        }
     };
     reader.readAsText(input.files[0]);
 });
 
+
+
 function visualizza(template) {
+    console.log('eccomi')
+    $('#template-number').html("Template " + template);
+    $('#template-img').attr('src', '/img/template' + template + '-full.png');
+    $('#template-img').attr('alt', 'template img');
 
-    document.getElementById('template-number').innerHTML = "Template " + template;
-    document.getElementById('template-img').setAttribute('src', '/img/template' + template + '-full.png');
-    document.getElementById('template-img').setAttribute('alt', 'template img');
-
-    document.getElementById('preview').style.visibility = 'visible';
-    document.getElementById('preview').style.opacity = 1;
+    $('#preview').css('visibility', 'visible');
+    $('#preview').css('opacity', 1);
 }
 
 function nascondi() {
-    document.getElementById('preview').style.visibility = 'hidden';
-    document.getElementById('preview').style.opacity = 0;
+    $('#preview').css('visibility', 'hidden');
+    $('#preview').css('opacity', 0);
 }
+
+$('#form').change(function () {
+    var radioValue = $("input[name='product']:checked").val();
+    if (radioValue == 2) {
+        $('#img-selector').attr('hidden', false);
+        $('.img-selector').attr('required', true);
+    }
+    else {
+        $('#img-selector').attr('hidden', true);
+        $('.img-selector').attr('required', false);
+    }
+});

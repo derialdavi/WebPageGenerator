@@ -1,4 +1,5 @@
 const fs = require('fs');
+const hbs = require('hbs');
 const path = require('path');
 const async = require('async');
 const express = require('express');
@@ -12,6 +13,10 @@ app.use(express.static('public'));
 
 handlebars.registerHelper('isEven', value => {
     return value % 2 === 0;
+})
+
+hbs.registerHelper('isTwo', value => {
+    return value === 2;
 })
 
 app.get('/', (req, res) => {
@@ -68,7 +73,6 @@ app.get('/', (req, res) => {
                 return;
             }
 
-            console.log(`Number of folders: ${folderCount}`);
         });
     });
 
