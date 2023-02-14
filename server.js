@@ -17,6 +17,7 @@ handlebars.registerHelper('isEven', value => {
 app.get('/', (req, res) => {
 
     let flag, projectName;
+    let projects = new Array();
     let listTemplate = new Array();
 
     if (req.query.alreadyExists === undefined)
@@ -57,6 +58,7 @@ app.get('/', (req, res) => {
 
                 if (stat.isDirectory()) {
                     folderCount++;
+                    projects.push(file);
                 }
                 callback();
             });
@@ -70,21 +72,14 @@ app.get('/', (req, res) => {
         });
     });
 
-    // fs.readdir('/public/siti', (err, files) => {
-    //     console.log(err);
-    //     for (var i = 0; i < files.length; i++) {
-    //         console.log(i);
-    //     }
-    // });
-
-    res.render('index', { alreadyExists: flag, projectName: projectName, sendToPage: req.query.sendToPage, listTemplate: listTemplate });
+    res.render('index', { alreadyExists: flag, projectName: projectName, sendToPage: req.query.sendToPage, listTemplate: listTemplate, link: projects });
 });
 
 app.post('/createPage', (req, res) => {
     req.on('data', chunk => {
 
         // Formattazione della stringa di dati contenente i parametri della query
-        chunk = chunk.toString().replace(/\+/g, ' ').replace(/%7B/g, '{').replace(/%7D/g, '}').replace(/%22/g, '"').replace(/%3A/g, ':').replace(/%2C/g, ',').replace(/\%5B/g, '[').replace(/\%5D/g, ']');
+        chunk = chunk.toString().replace(/\+/g, ' ').replace(/%7B/g, '{').replace(/%7D/g, '}').replace(/%22/g, '"').replace(/%3A/g, ':').replace(/%2C/g, ',').replace(/%5B/g, '[').replace(/%5D/g, ']');
         var params = new URLSearchParams(chunk);
 
         let content = JSON.parse(params.get('file-content'));
