@@ -20,10 +20,10 @@
         {{/if}}
 
 
-        <form action="/createPage" method="post" id="form">
+        <form action="/createPage" method="post" id="form" enctype="multipart/form-data">
             <div class="input_container" style="max-width: 30%;">
                 <label for="file-selector" class="button-85">Carica un file JSON</label>
-                <input type="file" name="file" id="file-selector" accept=".json" required>
+                <input type="file" name="JSONfile" id="file-selector" accept=".json" required>
             </div>
             <input type="text" name="file-content" id="file-content" readonly hidden>
 

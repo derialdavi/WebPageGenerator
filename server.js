@@ -4,12 +4,15 @@ const path = require('path');
 const async = require('async');
 const express = require('express');
 const handlebars = require('handlebars');
+const fileUpload = require('express-fileupload');
 
-const PORT = 4000;
+const PORT = 8080;
 
 const app = express();
+
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
+app.use(fileUpload());
 
 handlebars.registerHelper('isEven', value => {
     return value % 2 === 0;
@@ -80,41 +83,46 @@ app.get('/', (req, res) => {
 });
 
 app.post('/createPage', (req, res) => {
-    req.on('data', chunk => {
+    const { JSONfile } = req.files;
+    var images = new Array();
 
-        // Formattazione della stringa di dati contenente i parametri della query
-        chunk = chunk.toString().replace(/\+/g, ' ').replace(/%7B/g, '{').replace(/%7D/g, '}').replace(/%22/g, '"').replace(/%3A/g, ':').replace(/%2C/g, ',').replace(/%5B/g, '[').replace(/%5D/g, ']');
-        var params = new URLSearchParams(chunk);
-
-        let content = JSON.parse(params.get('file-content'));
-        let templateNumber = params.get('product');
-        let projectName = params.get('file').substring(0, params.get('file').indexOf('.'));
-
-        if (!fs.existsSync(__dirname + '/public/siti'))
-            fs.mkdirSync(__dirname + '/public/siti');
-
-        // Scrivere il file nella directory del nuovo progetto se non esiste un progetto con lo stesso nome
-        var projectFolder = __dirname + '/public/siti/' + projectName;
-        if (!fs.existsSync(projectFolder)) {
-
-            // Generazione della cartella e dei file del progetto
-            fs.mkdirSync(projectFolder);
-            fs.mkdirSync(projectFolder + '/css');
-            fs.mkdirSync(projectFolder + '/img');
-
-            let template = handlebars.compile(fs.readFileSync('views/template' + templateNumber + '.hbs').toString());
-
-            fs.writeFileSync(projectFolder + '/index.html', template(content));
-            fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
-
-            res.redirect('/?sendToPage=true&projectName=' + projectName);
+    for (const key in req.files) {
+        if (Object.hasOwnProperty.call(req.files, key)) {
+            if (key.substring(0, key.indexOf('e') + 1) == 'image') {
+                images.push(req.files[key]);
+            }
         }
+    };
 
-        else {
-            res.redirect('/?alreadyExists=true');
-        }
-    });
+    if (!fs.existsSync(__dirname + '/public/siti')) {
+        fs.mkdirSync(__dirname + '/public/siti');
+    }
 
+    var projectFolder = __dirname + '/public/siti/' + JSONfile.name.substring(0, JSONfile.name.indexOf('.'));
+    if (!fs.existsSync(projectFolder)) {
+
+        fs.mkdirSync(projectFolder);
+        fs.mkdirSync(projectFolder + '/css');
+        fs.mkdirSync(projectFolder + '/img');
+
+        let templateNumber = req.body.product;
+        let template = handlebars.compile(fs.readFileSync('views/template' + templateNumber + '.hbs').toString());
+
+        let content = JSON.parse(JSONfile.data.toString())
+        
+        fs.writeFileSync(projectFolder + '/index.html', template(content));
+        fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
+
+        images.forEach(image => {
+            image.mv(projectFolder + '/img/' + image.name);
+        });
+
+        res.redirect('/?sendToPage=true&projectName=' + JSONfile.name.substring(0, JSONfile.name.indexOf('.')));
+
+    }
+    else {
+        res.redirect('/?alreadyExists=true');
+    }
 });
 
 app.listen(PORT, () => {
