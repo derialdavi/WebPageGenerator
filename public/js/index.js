@@ -2,8 +2,6 @@ const input = document.querySelector('input[type="file"]');
 input.addEventListener('change', () => {
     const reader = new FileReader();
     reader.onload = function () {
-        $('#file-content').val(reader.result);
-
         let sections = JSON.parse(reader.result).sections;
         $('#img-selector').html('');
         for (var i = 0; i < sections.length; i++) {
