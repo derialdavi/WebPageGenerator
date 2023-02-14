@@ -1,3 +1,4 @@
+// Quando l'input di file JSON cambia (viene selezionato un altro file) viene letto il contenuto del file per leggere quante sezioni ci sono, in modo da generare tanti input[type=file] quante sezioni in caso l'utente dovesse selezionare il secondo template
 const input = document.querySelector('input[type="file"]');
 input.addEventListener('change', () => {
     const reader = new FileReader();
@@ -13,9 +14,8 @@ input.addEventListener('change', () => {
 });
 
 
-
+// Mostra il divisore della preview dei template
 function visualizza(template) {
-    console.log('eccomi')
     $('#template-number').html("Template " + template);
     $('#template-img').attr('src', '/img/template' + template + '-full.png');
     $('#template-img').attr('alt', 'template img');
@@ -24,11 +24,13 @@ function visualizza(template) {
     $('#preview').css('opacity', 1);
 }
 
+// Nasconde il divisore della preview dei template
 function nascondi() {
     $('#preview').css('visibility', 'hidden');
     $('#preview').css('opacity', 0);
 }
 
+// Se viene selezionato il secondo template mostra gli input per le foto, se no li nasconde
 $('#form').change(function () {
     var radioValue = $("input[name='product']:checked").val();
     if (radioValue == 2) {
