@@ -54,16 +54,16 @@
                     {{#if (isOne this)}}
                     <div id="invis" hidden>
                         <p>Immagini:</p>
-                        <input type="radio" id="no-img" name="img" value="no-img">
+                        <input type="radio" id="no-img" name="img" value="no-img" checked>
                         <label for="no-img">no</label>
                         <input type="radio" id="si-img" name="img" value="si-img">
                         <label for="si-img">si</label>
-                    <br>
-                    <br>
+                        <br>
+                        <br>
                     </div>
                     <div id="invis1" hidden>
-                    <label id="img-selector1" for="file" hidden>
-                    </label>
+                        <label id="img-selector1" for="file" hidden>
+                        </label>
                     </div>
                     {{/if}}
                     {{#if (isTwo this)}}
@@ -87,11 +87,24 @@
         {{/if}}
 
         <div id="all-links">
-            {{#each link}}
-            <a href="../siti/{{this}}"><button class="button-5">{{this}}</button></a>
-            <br>
-            <a href="/download/{{this}}"><button class="button-5">Scarica {{this}}</button></a>
-            {{/each}}
+            <table style="text-align: center">
+                <tr>
+                    {{#each link}}
+                    <td>
+                        <a href="../siti/{{this}}"><button class="button-5">{{this}}</button></a>
+                        &nbsp;&nbsp;
+                    </td>
+                    {{/each}}
+                </tr>
+                <tr>
+                    {{#each link}}
+                    <td>
+                        <a href="/download/{{this}}"><button class="button-5">Scarica {{this}}</button></a>
+                        &nbsp;&nbsp;
+                    </td>
+                    {{/each}}
+                </tr>
+            </table>
         </div>
 
         <div id="preview">
