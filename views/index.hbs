@@ -10,7 +10,6 @@
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -19,14 +18,15 @@
         <h1>Esiste gia un progetto con questo nome</h1>
         {{/if}}
 
+        Usare JSON?
+        <input type="checkbox" name="switch" id="switch-selector">
 
-        <form action="/createPage" method="post" id="form" enctype="multipart/form-data">
-            <div class="input_container" style="max-width: 30%;">
+        <form action="/createPage" method="post" id="form" enctype="multipart/form-data"><br>
+
+            <div id="JSON-file-btn" class="input_container" style="max-width: 30%;" hidden>
                 <label for="file-selector" class="button-85">Carica un file JSON</label>
                 <input type="file" name="JSONfile" id="file-selector" accept=".json" required>
             </div>
-
-            <br><br>
 
             <div class="container">
                 {{#each listTemplate}}
@@ -44,19 +44,69 @@
                                 <div class="card-body">
                                     <img src="img/template{{this}}.png" alt="">
                                 </div>
-                                <center><button id="preview-btn" type="button"
-                                        onclick="visualizza({{this}})">Visualizza</button></center>
+                                <center><button id="preview-btn{{this}}" class="preview-btn" type="button" data-idTemplate="{{this}}">Visualizza</button></center>
                             </div>
 
                         </label>
                     </div>
                     {{#if (isTwo this)}}
                     <br>
-                    <label id="img-selector" for="file" hidden>
+                    <label id="img-selector" for="file">
                     </label>
                     {{/if}}
                 </div>
                 {{/each}}
+            </div>
+
+            <div id="data">
+                Titolo:
+                <input type="text" name="Titolo" id="titolo">
+                <br>
+                Proprietario:
+                <input type="text" name="Proprietario" id="proprietario">
+
+                <hr>
+
+                <h2>Header</h2>
+                titolo:
+                <input type="text" name="titolo" id="titolo-header">
+                <br>
+                sottotitolo:
+                <input type="text" name="sottotitolo" id="sottotitolo">
+
+                <hr>
+
+                <div id="sezione1">
+
+                    <h2>Sezione 1</h2>
+                    titolo:
+                    <input type="text" name="titoloSezione1" id="titolo-sezione1">
+                    <br>
+                    descrizione:
+                    <input type="text" name="descrizioneSezione1" id="descrizione-sezione1">
+                    <br>
+
+                    <div id="optionalsSezione1">
+                    </div>
+
+                    <button class="aggiungiListaSezione" type="button" data-idSezione="1">+ lista</button>
+                    <button type="button" onclick="aggiungiImmagine1()">+ immagine</button>
+                </div>
+
+                <hr>
+                <button>+ sezione</button>
+                <hr>
+
+                <h2>Footer</h2>
+                Indirizzo:
+                <input type="text" name="indirizzo" id="indirizzo">
+                <br>
+                Email:
+                <input type="email" name="email" id="email">
+                <br>
+                Telefono:
+                <input type="text" name="telefono" id="telefono">
+
             </div>
 
             <button class="button-5" type="submit" role="button">Crea</button>
@@ -66,7 +116,6 @@
         {{#if sendToPage}}
         <a href="/siti/{{projectName}}">
             <button class="button-5">vai alla pagina appena creata</button>
-            <script>console.log("Cioa")</script>
         </a>
         {{/if}}
 
@@ -83,9 +132,9 @@
 
                 <h3 id="template-number"></h3>
 
-                <div id="exit">
-                    <svg onclick="nascondi()" xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                        fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                <div>
+                    <svg id="exit" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        class="bi bi-x-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                         <path
                             d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -101,12 +150,13 @@
             </div>
         </div>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js" type="text/javascript"></script>
         <script src="js/index.js"></script>
-        <footer>
+        {{!-- <footer>
             <div>
                 <p>Copyright &copy; Ficars2k23</p>
             </div>
-        </footer>
+        </footer> --}}
     </center>
 </body>
 
