@@ -282,3 +282,8 @@ footer {
     background-color: transparent;
     color: gainsboro;
 }
+
+#invis label, p{
+    display: inline;
+}
+

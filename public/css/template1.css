@@ -12266,6 +12266,16 @@ section {
     background-color: #fff;
 }
 
-li{
+li {
     list-style-type: circle;
+}
+
+.col-lg-6 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
 }

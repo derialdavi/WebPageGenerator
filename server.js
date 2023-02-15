@@ -23,6 +23,10 @@ handlebars.registerHelper('isEven', value => {
     return value % 2 === 0;
 })
 
+hbs.registerHelper('isOne', value => {
+    return value === 1;
+})
+
 hbs.registerHelper('isTwo', value => {
     return value === 2;
 })

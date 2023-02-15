@@ -50,6 +50,22 @@
 
                         </label>
                     </div>
+                    <br>
+                    {{#if (isOne this)}}
+                    <div id="invis" hidden>
+                        <p>Immagini:</p>
+                        <input type="radio" id="no-img" name="img" value="no-img">
+                        <label for="no-img">no</label>
+                        <input type="radio" id="si-img" name="img" value="si-img">
+                        <label for="si-img">si</label>
+                    <br>
+                    <br>
+                    </div>
+                    <div id="invis1" hidden>
+                    <label id="img-selector1" for="file" hidden>
+                    </label>
+                    </div>
+                    {{/if}}
                     {{#if (isTwo this)}}
                     <br>
                     <label id="img-selector" for="file" hidden>
