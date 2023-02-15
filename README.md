@@ -14,7 +14,7 @@ WebPageGenerator è un sito che permette all'utente di modifcare un json contene
         {
             "titolo": "Sezione 1",
             "descrizione": "Descrizione sezione 1",
-            "img": "pedro-lastra-wCujVcf0JDw-unsplash.jpg"
+            "img": "muro.jpg"
         },
         {
             "titolo": "Sezione 2",
@@ -33,8 +33,11 @@ WebPageGenerator è un sito che permette all'utente di modifcare un json contene
                     ]
                 }
             ],
-            "img": "sanni-sahil-cSm2a_-25YU-unsplash.jpg"
+            "img": "luna.jpg"
         }
-    ]
+    ],
+    "indirizzo":"via ... n.civico",
+    "email":"dade.carra@gmail.com",
+    "numero_di_telefono":"+39 1234567890"
 }
 ```
