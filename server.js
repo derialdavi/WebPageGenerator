@@ -7,7 +7,17 @@ const archiver = require('archiver');
 const handlebars = require('handlebars');
 const fileUpload = require('express-fileupload');
 
-const PORT = 8080;
+var PORT = 3000;
+function getPort() {
+    process.argv.forEach((val, index, array) => {
+        if (val == '-p') {
+            if (parseInt(process.argv[index + 1]) != NaN) {
+                PORT = process.argv[index + 1];
+            }
+        }
+    })
+};
+getPort();
 
 const app = express();
 
@@ -94,6 +104,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/createPage', (req, res) => {
+    console.log(req.body);
     const { JSONfile } = req.files;
 
     // Controllo che nella richiesta ci sia un file JSON
