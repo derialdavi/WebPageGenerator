@@ -58,9 +58,9 @@ $(document).ready(() => {
     // listeInSezioni
     /*
         [
-            [3, [1, 5, 3]],
-            [1, [4]],
-            [5, [1, 6, 5, 3, 5]]
+sez -->     [3, [1, 5, 3]],
+sez -->     [1, [4]],
+sez -->     [5, [1, 6, 5, 3, 5]]
         ]
             ^   ^
             |   |--- Numero di elementi per liste
@@ -68,8 +68,8 @@ $(document).ready(() => {
             |---- Numero di liste per sezione
     */
     let listeInSezioni = [];
-    $('.aggiungiListaSezione').click(() => {
-        let idSezione = $('.aggiungiListaSezione').attr('data-idSezione');
+    $(document).on('click', '.aggiungiLista', event => {
+        let idSezione = $(event.target).attr('data-idSezione');
         
         idSezione--;
         if (listeInSezioni[idSezione] == undefined) {
@@ -93,7 +93,7 @@ $(document).ready(() => {
                                                     'Elementi:' +
                                                     '<input type="number" min="1" value="1" name="nElementiLista' + idLista + 'Sezione' + idSezione + '" class="nElementiLista" data-idSezione="' + idSezione + '" data-idLista="' + idLista + '" />' +
                                                     '<div id="elementiLista' + idLista + 'Sezione' + idSezione + '">'+
-                                                    '<div id="elementoSezione' + idSezione + 'Lista' + idLista + '">'+
+                                                    '<div id="elemento1Sezione' + idSezione + 'Lista' + idLista + '">'+
                                                     'Elemento 1: <input type="text" /></div></div>');
     });
 
@@ -103,16 +103,14 @@ $(document).ready(() => {
 
         let prevValue = listeInSezioni[idSezione-1][1][idLista-1];
         listeInSezioni[idSezione-1][1][idLista-1] = $(event.target).val();
-        // Cambiare l'ordine di come vengono eliminate le cose facendo complemento a <max>
-        // let tmp = 
 
         if ($(event.target).val() > prevValue) {
-            $('#elementiLista' + idLista + 'Sezione' + idSezione).append('<div id="elementoSezione' + idSezione + 'Lista' + idLista + '">'+
+            $('#elementiLista' + idLista + 'Sezione' + idSezione).append('<div id="elemento' + listeInSezioni[idSezione-1][1][idLista-1] + 'Sezione' + idSezione + 'Lista' + idLista + '">'+
                                                                             'Elemento ' + listeInSezioni[idSezione-1][1][idLista-1] + ' : <input type="text" />'+
                                                                             '</div>');
         }
         else {
-            $('#elementoSezione' + idSezione + 'Lista' + idLista).remove();
+            $('#elemento' + parseInt(parseInt($(event.target).val()) + 1) + 'Sezione' + idSezione + 'Lista' + idLista).remove();
         }
     });
 
@@ -125,5 +123,10 @@ $(document).ready(() => {
         let idLista = $(event.target).attr('data-idLista');
         $('#div-sezione' + idSezione + '-lista' + idLista).remove();
         $('#div-sezione' + idSezione + '-lista' + parseInt(idLista-1)).attr('hidden', false);
+    });
+
+    $(document).on('click', '.aggiugniImmagine', event => {
+        let idSezione = $(event.target).attr('data-idSezione');
+        
     })
 });
