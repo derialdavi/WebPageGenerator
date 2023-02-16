@@ -5,12 +5,12 @@ input.addEventListener('change', () => {
     reader.onload = function () {
         let sections = JSON.parse(reader.result).sections;
         $('#img-selector').html('');
-        $('#img-selector1').html('');
+        $('#img-selectorv1').html('');
         for (var i = 0; i < sections.length; i++) {
             let text = $('#img-selector').html();
-            let text1 = $('#img-selector1').html();
+            let text1 = $('#img-selectorv1').html();
             $('#img-selector').html(text + '<label for="img-selector'+ parseInt(i+1) +'" class="button-85"> carica immagine sezione n.'+ parseInt(i+1) +' </label><input type="file" name="image' + parseInt(i+1) + '" id="img-selector' + parseInt(i+1) + '" accept="image/*">')
-            $('#img-selector1').html(text1 + '<label for="img-selector1'+ parseInt(i+1) +'" class="button-85"> carica immagine sezione n.'+ parseInt(i+1) +' </label><input type="file" name="image' + parseInt(i+1) + '" id="img-selector1' + parseInt(i+1) + '" accept="image/*">')
+            $('#img-selectorv1').html(text1 + '<label for="img-selectorv1'+ parseInt(i+1) +'" class="button-85"> carica immagine sezione n.'+ parseInt(i+1) +' </label><input type="file" name="image' + parseInt(i+1) + '" id="img-selectorv1' + parseInt(i+1) + '" accept="image/*">')
         }
     };
     reader.readAsText(input.files[0]);
@@ -52,12 +52,12 @@ $('#form').change(function () {
     if (radioValue == 1) {
         $('#invis').attr('hidden', false);
         $('#invis1').attr('hidden', false);
-        $('.img-selector1').attr('required', true);
+        $('.img-selectorv1').attr('required', true);
     }
     else {
         $('#invis').attr('hidden', true);
         $('#invis1').attr('hidden', true);
-        $('.img-selector1').attr('required', false);
+        $('.img-selectorv1').attr('required', false);
     }
 });
 $('#form').change(function () {
@@ -65,11 +65,11 @@ $('#form').change(function () {
     
     if (radioValueimg) {
         console.log('cioa');
-        $('#img-selector1').attr('hidden', false);
-        $('.img-selector1').attr('required', true);
+        $('#img-selectorv1').attr('hidden', false);
+        $('.img-selectorv1').attr('required', true);
     }
     else {
-        $('#img-selector1').attr('hidden', true);
-        $('.img-selector1').attr('required', false);
+        $('#img-selectorv1').attr('hidden', true);
+        $('.img-selectorv1').attr('required', false);
     }
 });
