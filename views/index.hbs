@@ -18,14 +18,16 @@
         <h1>Esiste gia un progetto con questo nome</h1>
         {{/if}}
 
-        Usare JSON?
+        Usare form?
         <input type="checkbox" name="switch" id="switch-selector">
 
         <form action="/createPage" method="post" id="form" enctype="multipart/form-data"><br>
 
-            <div id="JSON-file-btn" class="input_container" style="max-width: 30%;" hidden>
-                <label for="file-selector" class="button-85">Carica un file JSON</label>
-                <input type="file" name="JSONfile" id="file-selector" accept=".json" required>
+            <div id="JSON-file-btn" class="input_container" style="max-width: 30%;">
+                <div id="JSON-file-btn-inner">
+                    <label for="file-selector" class="button-85">Carica un file JSON</label>
+                    <input type="file" name="JSONfile" id="file-selector" accept=".json" required>
+                </div>
             </div>
 
             <div class="container">
@@ -44,69 +46,25 @@
                                 <div class="card-body">
                                     <img src="img/template{{this}}.png" alt="">
                                 </div>
-                                <center><button id="preview-btn{{this}}" class="preview-btn" type="button" data-idTemplate="{{this}}">Visualizza</button></center>
+                                <center><button id="preview-btn{{this}}" class="preview-btn" type="button"
+                                        data-idTemplate="{{this}}">Visualizza</button></center>
                             </div>
 
                         </label>
                     </div>
                     {{#if (isTwo this)}}
                     <br>
-                    <label id="img-selector" for="file">
-                    </label>
+                    <div id="img-selector">
+                        <div id="img-selector-inner"></div>
+                    </div>
                     {{/if}}
                 </div>
                 {{/each}}
             </div>
 
             <div id="data">
-                Titolo:
-                <input type="text" name="Titolo" id="titolo">
-                <br>
-                Proprietario:
-                <input type="text" name="Proprietario" id="proprietario">
-
-                <hr>
-
-                <h2>Header</h2>
-                titolo:
-                <input type="text" name="titolo" id="titolo-header">
-                <br>
-                sottotitolo:
-                <input type="text" name="sottotitolo" id="sottotitolo">
-
-                <hr>
-
-                <div id="sezione1">
-
-                    <h2>Sezione 1</h2>
-                    titolo:
-                    <input type="text" name="titoloSezione1" id="titolo-sezione1">
-                    <br>
-                    descrizione:
-                    <input type="text" name="descrizioneSezione1" id="descrizione-sezione1">
-                    <br>
-
-                    <div id="optionalsSezione1">
-                    </div>
-
-                    <button class="aggiungiLista" type="button" data-idSezione="1">+ lista</button>
-                    <button class="aggiungiImmagine" type="button" data-idSezione="1">+ immagine</button>
+                <div id="data-inner">
                 </div>
-
-                <hr>
-                <button>+ sezione</button>
-                <hr>
-
-                <h2>Footer</h2>
-                Indirizzo:
-                <input type="text" name="indirizzo" id="indirizzo">
-                <br>
-                Email:
-                <input type="email" name="email" id="email">
-                <br>
-                Telefono:
-                <input type="text" name="telefono" id="telefono">
-
             </div>
 
             <button class="button-5" type="submit" role="button">Crea</button>
