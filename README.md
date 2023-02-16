@@ -13,12 +13,12 @@ WebPageGenerator è un sito che permette all'utente di modifcare un json contene
     "sections": [
         {
             "titolo": "Sezione 1",
-            "descrizione": "Descrizione sezione 1",
+            "paragrafo": "paragrafo sezione 1",
             "img": "muro.jpg"
         },
         {
             "titolo": "Sezione 2",
-            "descrizione": "Descrizione sezione 2",
+            "paragrafo": "paragrafo sezione 2",
             "liste": [
                 {
                     "lista1": [
