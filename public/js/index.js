@@ -6,15 +6,15 @@ $(document).ready(() => {
         return `<div id="sezione` + nSezione + `">
                     <h2>Sezione ` + nSezione + `</h2>
                     titolo:
-                    <input type="text" name="titoloSezione` + nSezione + `" id="titolo-sezione` + nSezione + `">
+                    <input type="text" name="Sezioni" id="titolo-sezione` + nSezione + `">
                     <br>
                     descrizione:
-                    <input type="text" name="descrizioneSezione` + nSezione + `" id="descrizione-sezione` + nSezione + `">
+                    <input type="text" name="paragrafoSezioni" id="descrizione-sezione` + nSezione + `">
                     <br>
 
-                    <div id="immagineSezione` + nSezione + `" class="input_container" style="max-width: 15%;">
+                    <div id="immagini" class="input_container" style="max-width: 15%;">
                         <label for="file-selector" class="button-85">Carica immagine sezione ` + nSezione + `</label>
-                        <input class="image-input" type="file" name="immagineSezione1" id="immagineSezione` + nSezione + `" accept="image/png, image/jpeg">
+                        <input class="image-input" type="file" name="images" id="immagineSezione` + nSezione + `" accept="image/png, image/jpeg">
                     </div>
 
                     <div id="optionalsSezione` + nSezione + `">
@@ -106,7 +106,7 @@ $(document).ready(() => {
             let sections = JSON.parse(reader.result).sections;
             let text = '';
             for (var i = 0; i < sections.length; i++) {
-                text += '<label for="img-selector' + parseInt(i + 1) + '" class="button-85"> carica immagine sezione n.' + parseInt(i + 1) + ' </label><input type="file" name="image' + parseInt(i + 1) + '" id="img-selector' + parseInt(i + 1) + '" accept="image/*">'
+                text += '<label for="img-selector' + parseInt(i + 1) + '" class="button-85"> carica immagine sezione n.' + parseInt(i + 1) + ' </label><input type="file" name="images" id="img-selector' + parseInt(i + 1) + '" accept="image/*">'
             }
             $('#img-selector-inner').html(text);
         }
@@ -198,13 +198,13 @@ sez -->     [5, [1, 6, 5, 3, 5]]
         idSezione++;
         $('#optionalsSezione' + idSezione).append('<div id="div-sezione' + idSezione + '-lista' + idLista + '">' +
             '<br> Nome lista ' + idLista + ': ' +
-            '<input type="text" name="nomeLista' + idLista + 'Sezione' + idSezione + '" id="nomeLista' + idLista + 'Sezione' + idSezione + '">' +
+            '<input type="text" name="listeSezione' + idSezione + '" id="nomeLista' + idLista + 'Sezione' + idSezione + '">' +
             '<button type="button" class="rimuovi-lista-btn" data-idLista="' + idLista + '" data-idSezione="' + idSezione + '">rimuovi lista ' + idLista + '</button> <br>' +
             'Elementi:' +
             '<input type="number" min="1" value="1" name="nElementiLista' + idLista + 'Sezione' + idSezione + '" class="nElementiLista" data-idSezione="' + idSezione + '" data-idLista="' + idLista + '" />' +
             '<div id="elementiLista' + idLista + 'Sezione' + idSezione + '">' +
             '<div id="elemento1Sezione' + idSezione + 'Lista' + idLista + '">' +
-            'Elemento 1: <input type="text" /></div></div>');
+            'Elemento 1: <input type="text" name="elementiLista' + idLista + 'Sezione' + idSezione + '" /></div></div>');
     });
 
     /*
@@ -223,8 +223,9 @@ sez -->     [5, [1, 6, 5, 3, 5]]
 
         if (parseInt($(event.target).val()) > prevValue) {
             $('#elementiLista' + idLista + 'Sezione' + idSezione).append('<div id="elemento' + listeInSezioni[idSezione - 1][1][idLista - 1] + 'Sezione' + idSezione + 'Lista' + idLista + '">' +
-                'Elemento ' + listeInSezioni[idSezione - 1][1][idLista - 1] + ' : <input type="text" />' +
-                '</div>');
+                                                                         'Elemento ' + listeInSezioni[idSezione - 1][1][idLista - 1] + ':'+
+                                                                         '<input type="text" name="elementiLista' + idLista + 'Sezione' + idSezione + '" />' +
+                                                                         '</div>');
         }
         else {
             $('#elemento' + parseInt(parseInt($(event.target).val()) + 1) + 'Sezione' + idSezione + 'Lista' + idLista).remove();

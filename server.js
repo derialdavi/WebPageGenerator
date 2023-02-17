@@ -104,55 +104,116 @@ app.get('/', (req, res) => {
 });
 
 app.post('/createPage', (req, res) => {
-    console.log(req.body);
-    const { JSONfile } = req.files;
-
-    // Controllo che nella richiesta ci sia un file JSON
-    if (!JSONfile) return res.sendStatus(400);
-
     // Array di file delle immagini
-    var images = new Array();
+    if (req.files != null) {    
+        var { images } = req.files;
+    }
 
-    // Inizializzare l'array images
-    for (const key in req.files) {
-        if (Object.hasOwnProperty.call(req.files, key)) {
-            if (key.substring(0, key.indexOf('e') + 1) == 'image') {
-                images.push(req.files[key]);
-            }
-        }
-    };
+    // Lettura dal corpo della richiesta del template selezionato
+    let templateNumber = req.body.product;
 
-    // Se già non esiste una cartella con il nome del progetto
-    var projectFolder = __dirname + '/public/siti/' + JSONfile.name.substring(0, JSONfile.name.indexOf('.'));
-    if (!fs.existsSync(projectFolder)) {
+    let projectFolder;
+    let projectName;
+    let content;
 
-        // Creo la cartella del progetto con le sue sotto cartelle
-        fs.mkdirSync(projectFolder);
-        fs.mkdirSync(projectFolder + '/css');
-        fs.mkdirSync(projectFolder + '/img');
+    if (req.body.switch == undefined) {
+        const { JSONfile } = req.files;
 
-        // Lettura dal corpo della richiesta del template selezionato
-        let templateNumber = req.body.product;
-        // Caricare il template handlebars dal file del template selezionato
-        let template = handlebars.compile(fs.readFileSync('views/template' + templateNumber + '.hbs').toString());
+        // Controllo che nella richiesta ci sia un file JSON
+        if (!JSONfile) return res.sendStatus(400);
+
         // Ottenere i dati del file JSON
-        let content = JSON.parse(JSONfile.data.toString())
-
-        // Creare il file index.html con il contenuto del template compilato con i dati del JSON e copiare il css del template nella cartella del css del progetto
-        fs.writeFileSync(projectFolder + '/index.html', template(content));
-        fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
-
-        // Spostare i file nella cartella del progetto
-        images.forEach(image => {
-            image.mv(projectFolder + '/img/' + image.name);
-        });
-
-        res.redirect('/?sendToPage=true&projectName=' + JSONfile.name.substring(0, JSONfile.name.indexOf('.')));
+        content = JSON.parse(JSONfile.data.toString());
+        projectName = JSONfile.name.substring(0, JSONfile.name.indexOf('.'));
+        projectFolder = __dirname + '/public/siti/' + projectName;
 
     }
     else {
-        // Esiste gia un progetto con questo nome
-        res.redirect('/?alreadyExists=true');
+        let sections;
+        let sectionsParagraph;
+
+        projectName = req.body.Titolo
+        projectFolder = __dirname + '/public/siti/' + projectName;
+        content = {
+            Titolo: projectName,
+            Proprietario: req.body.Proprietario,
+            header: {
+                titolo: req.body.titolo,
+                sottotitolo: req.body.sottotitolo
+            },
+            sections: [],
+            footer: {
+                indirizzo: req.body.indirizzo,
+                email: req.body.email,
+                telefono: req.body.telefono
+            }
+        }
+
+        sections = typeof(req.body.Sezioni) == 'string' ? sections = new Array(req.body.Sezioni) : sections = req.body.Sezioni;
+        sectionsParagraph = typeof(req.body.paragrafoSezioni) == 'string' ? sectionsParagraph = new Array(req.body.paragrafoSezioni) : sections = req.body.paragrafoSezioni
+        
+        for (let i = 0; i < sections.length; i++) {
+            let lists = new Array();
+            let elements = new Array();
+            let listsInSections;
+            let elementsInList;
+            var section = {
+                titolo: sections[i],
+                paragrafo: sectionsParagraph[i]
+            }
+
+            if (req.body['listeSezione' + i] != undefined) {
+                listsInSections = new Array(req.body['listeSezione' + i]);
+
+                for (let j = 0; j < listsInSections.length; i++) {
+                    elementsInList = new Array(req.body['elementiLista' + j + 'Sezione' + i])
+                    for (let k = 0; k < elementsInList.length; k++) {
+                        elements.push(elementsInList[k]);
+                    }
+
+                    lists.push({
+                        [req.body['listeSezione' + i][j]]: elements
+                    })
+                }
+            }
+            section['liste'] = lists;
+
+            if (images != undefined) {
+                section['img'] = images[i];
+            }
+
+            content.sections.push(section);
+        }
+        // Se già non esiste una cartella con il nome del progetto
+        if (!fs.existsSync(projectFolder)) {
+
+            // Creo la cartella del progetto con le sue sotto cartelle
+            fs.mkdirSync(projectFolder);
+            fs.mkdirSync(projectFolder + '/css');
+            fs.mkdirSync(projectFolder + '/img');
+
+
+            // Caricare il template handlebars dal file del template selezionato
+            let template = handlebars.compile(fs.readFileSync('views/template' + templateNumber + '.hbs').toString());
+
+            // Creare il file index.html con il contenuto del template compilato con i dati del JSON e copiare il css del template nella cartella del css del progetto
+            fs.writeFileSync(projectFolder + '/index.html', template(content));
+            fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
+
+            // Spostare i file nella cartella del progetto
+            if (images != undefined) {
+                images.forEach(image => {
+                    image.mv(projectFolder + '/img/' + image.name);
+                });
+            }
+                
+            res.redirect('/?sendToPage=true&projectName=' + projectName);
+
+        }
+        else {
+            // Esiste gia un progetto con questo nome
+            res.redirect('/?alreadyExists=true');
+        }
     }
 });
 
