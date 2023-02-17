@@ -112,28 +112,34 @@ app.post('/createPage', (req, res) => {
     // Lettura dal corpo della richiesta del template selezionato
     let templateNumber = req.body.product;
 
+    // Directory cartella del progetto
     let projectFolder;
+    // Nome del progetto
     let projectName;
+    // Contenuto in formato JSON
     let content;
 
+    // Se il checkbox non è selezionato
     if (req.body.switch == undefined) {
+        // Prendo il file JSON dall'input
         const { JSONfile } = req.files;
 
-        // Controllo che nella richiesta ci sia un file JSON
+        // Controllo che il file JSON esista
         if (!JSONfile) return res.sendStatus(400);
 
-        // Ottenere i dati del file JSON
+        // Ottenere i dati del file JSON e estrarre il nome del progetto dal nome del file
         content = JSON.parse(JSONfile.data.toString());
         projectName = JSONfile.name.substring(0, JSONfile.name.indexOf('.'));
-        projectFolder = __dirname + '/public/siti/' + projectName;
-
+        
     }
+    // Se il checkbox è selezionato
     else {
         let sections;
         let sectionsParagraph;
-
+        // Perendo il nome del progetto dal body della richiesta
         projectName = req.body.Titolo
-        projectFolder = __dirname + '/public/siti/' + projectName;
+
+        // Struttura base del JSON
         content = {
             Titolo: projectName,
             Proprietario: req.body.Proprietario,
@@ -149,41 +155,61 @@ app.post('/createPage', (req, res) => {
             }
         }
 
-        sections = typeof(req.body.Sezioni) == 'string' ? sections = new Array(req.body.Sezioni) : sections = req.body.Sezioni;
-        sectionsParagraph = typeof(req.body.paragrafoSezioni) == 'string' ? sectionsParagraph = new Array(req.body.paragrafoSezioni) : sections = req.body.paragrafoSezioni
+        /*
+            Dal corpo della richiesta ottengo quante sezioni (e paragrafi ad esse legate) ci sono,
+            se deovesse essere solo 1 e facessi un ciclo per i = 0; i < sections.length il ciclo itererebbe per le lettere del nome della sezione
+            e creerebbe una sezione per ogni lettera, quindi evito questo caso facendo il casting ad array se il tipo di req.body.Sezioni == string
+        */
+        sections = typeof(req.body.Sezioni) == 'string' ? new Array(req.body.Sezioni) : req.body.Sezioni;
+        sectionsParagraph = typeof(req.body.paragrafoSezioni) == 'string' ? new Array(req.body.paragrafoSezioni) : req.body.paragrafoSezioni
         
-        for (let i = 0; i < sections.length; i++) {
+        // Per ogni sezione
+        for (let i = 1; i < sections.length + 1; i++) {
             let lists = new Array();
             let elements = new Array();
-            let listsInSections;
+            let listsInSection;
             let elementsInList;
+            
+            // Struttura base di una sezione
             var section = {
-                titolo: sections[i],
-                paragrafo: sectionsParagraph[i]
+                titolo: sections[i-1],
+                paragrafo: sectionsParagraph[i-1]
             }
+            
+            // Guardo se ci sono liste e faccio lo stesso controllo delle sezioni
+            listsInSection = typeof(req.body['listeSezione' + i]) == 'string' ? new Array(req.body['listeSezione' + i]) : req.body['listeSezione' + i];
 
-            if (req.body['listeSezione' + i] != undefined) {
-                listsInSections = new Array(req.body['listeSezione' + i]);
+            // Se almeno una lista è presente
+            if (listsInSection != undefined) {
+                // Per ogni lista della sezione
+                for (let j = 0; j < listsInSection.length; j++) {
+                    // Guardo quanti elementi della lista ci sono e faccio lo stesso controllo delle sezioni
+                    elementsInList = typeof(req.body['elementiLista' + parseInt(j+1) + 'Sezione' + parseInt(i)]) == 'string' ? new Array(req.body['elementiLista' + parseInt(j+1) + 'Sezione' + parseInt(i)]) :  req.body['elementiLista' + parseInt(j+1) + 'Sezione' + parseInt(i)];
 
-                for (let j = 0; j < listsInSections.length; i++) {
-                    elementsInList = new Array(req.body['elementiLista' + j + 'Sezione' + i])
+                    // Aggiungo ad elements ogni elemento della lista e la inserisco in lists
+                    elements = [];
                     for (let k = 0; k < elementsInList.length; k++) {
                         elements.push(elementsInList[k]);
                     }
-
                     lists.push({
-                        [req.body['listeSezione' + i][j]]: elements
+                        [listsInSection[j]]: elements
                     })
                 }
+                // Aggiungo alla struttura base della sezione tutte le liste
+                section['liste'] = lists;
             }
-            section['liste'] = lists;
 
+            // Se c'è almeno un immagine
+            // TODO: se inserisco 3 sezioni, la prima e la terza con immagine e la seconda no, c'è errore
             if (images != undefined) {
                 section['img'] = images[i];
             }
 
+            // Aggiungo alla struttura del JSON le informazioni aggiuntive
             content.sections.push(section);
         }
+
+        projectFolder = __dirname + '/public/siti/' + projectName;
         // Se già non esiste una cartella con il nome del progetto
         if (!fs.existsSync(projectFolder)) {
 
@@ -201,6 +227,7 @@ app.post('/createPage', (req, res) => {
             fs.writeFileSync(projectFolder + '/css/style.css', fs.readFileSync('./public/css/template' + templateNumber + '.css'));
 
             // Spostare i file nella cartella del progetto
+            // Probabile errore qui
             if (images != undefined) {
                 images.forEach(image => {
                     image.mv(projectFolder + '/img/' + image.name);
