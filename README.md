@@ -1,7 +1,29 @@
 # WebPageGenerator
 WebPageGenerator è un sito che permette all'utente di modifcare un json contenente le informazioni di una pagina web. Le informazioni verranno sostituite ad un template html.
 
-## Esempio JSON
+## Guida per la configurazione del JSON
+Il JSON che deve essere mandato al server deve avere delle informazioni di base obbligatorie e poi possono essere aggiunte informazioni aggiuntive come immagini o liste.
+
+Il nome del progetto verrà preso automaticamente dal nome del file JSON selezionato
+
+### Titolo, Proprietario, indirizzo, email, numero_di_telefono
+`"Titolo"`, `"Proprietario"` `"indirizzo"`, `"email"` e `"numero_di_telefono"` sono dei campi che vanno semplicemente inseriti all'interno dell'oggetto e che contengono il valore rispettivamente del titolo della finestra del browser, del proprietario del sito, dell'indirizzo della sede, dell'indirizzo email e del numero di telefono.
+
+### header
+Nell'oggetto `"header"` sono contenuti due valori:
+- titolo
+- sottotitolo
+
+Questi due campi verranno stampati all'inizio della pagina e sono il nome e la descrizione del progetto che state creando
+
+### sections
+Il campo `"sections"` è di base una lista con all'interno 1 oggetto che contiene almeno un `"titolo"` e un `"paragrafo"`, che servono a descrivere quella sezione.
+
+Per ogni sezione posso essere aggiunte un immagine o delle liste. Per inserire un immagine bisogna aggiungere la chiave `"img"` e come valore mettere il nome del file. Per inserire delle liste bisogna aggiungere la chiave `"liste"`, che deve essere una lista, che all'interno contenga tanti oggetti quante liste si vogliono fare. Ogni oggetto della lista avrà come chiave il nome della lista e come valore una lista contenente gli elementi di essa.
+
+> Possono essere aggiunte quante sezioni si vogliono.
+
+## Esempio di JSON
 ```
 {
     "Titolo": "Lorem ipsum",
