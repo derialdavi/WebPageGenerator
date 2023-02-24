@@ -13,10 +13,21 @@ body {
     justify-content: center;
 }
 
+h3 a::after {
+    content: ' → ' attr(href);
+}
 
-/**
-Component
-**/
+h3 a {
+    color: #696969;
+    border-bottom: 3px solid #fff3;
+    transition: .5s
+}
+
+h3 a:hover {
+    text-decoration: none;
+    color: #000;
+    border-bottom-color: #fff9;
+}
 
 label {
     width: 100%;
@@ -69,10 +80,10 @@ label {
 
 input[type=file]::file-selector-button {
     display: none;
-    
+
 }
 
-input[type=file]{
+input[type=file] {
     justify-content: center;
 }
 
@@ -229,7 +240,7 @@ input[type=file]{
 .button-85:before {
     content: "";
     background: linear-gradient(45deg,
-            #918585, #c2b3b3, #fff, #6dd5fa, #2980b9, #073283,#002bff, #254a6d, #404e6e);
+            #918585, #c2b3b3, #fff, #6dd5fa, #2980b9, #073283, #002bff, #254a6d, #404e6e);
     position: absolute;
     top: -2px;
     left: -2px;
@@ -270,7 +281,7 @@ input[type=file]{
     border-radius: 10px;
 }
 
-label.button-85{
+label.button-85 {
     width: 70%;
 }
 
@@ -282,7 +293,7 @@ footer {
     text-align: center;
 }
 
-#invis label, p{
+#invis label,
+p {
     display: inline;
 }
-
